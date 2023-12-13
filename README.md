@@ -1,6 +1,8 @@
 # PDF Viewer React App
 
-This is a simple React application that allows users to view a PDF document.
+Simple React app to view pdfs using react-pdf, handles password protected files and multi-page pdfs with navigation features and good ux.
+
+See `Requirements.md` for the original requirements.
 
 ## Project Structure
 
