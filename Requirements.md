@@ -27,5 +27,12 @@
 - A distinct close button, possibly in the top-right corner of the modal.
 - Animations for opening and closing the modal can also enhance UX.
 
+### Zoom Controls:
+- Implement zoom controls to zoom in and out of the document. The zoom controls should be accessible from the document viewer.
+
+### Potrait and Landscape Mode:
+- The document viewer should be able to display documents in both portrait and landscape mode.
+- Implement a button to toggle between portrait and landscape mode.
+  
 ### Page Breaks Between Pages:
 - In your DocumentViewer, you can add a style to each Page component to create a separation, like a bottom margin, to simulate a page break. Each page should be separated by a page break.
