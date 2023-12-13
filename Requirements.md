@@ -1,5 +1,5 @@
 
-## Document Viewer POC using React
+## PDF Viewer React App
 
 ### Requirements
 - Upon clicking the view button. The document should be displayed in the document viewer.

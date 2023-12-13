@@ -1,4 +1,4 @@
-# Document Viewer Application
+# PDF Viewer React App
 
 This is a simple React application that allows users to view a PDF document.
 
