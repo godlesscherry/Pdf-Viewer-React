@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import DocumentViewer from './DocumentViewer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const [isViewerOpen, setIsViewerOpen] = useState(false);
+    const documentFile = process.env.PUBLIC_URL + '/large-multi-page.pdf';
+    const handleOpenViewer = () => setIsViewerOpen(true);
+    const handleCloseViewer = () => setIsViewerOpen(false);
+    return (
+        <div>
+            <button onClick={handleOpenViewer}>View Document</button>
+            {isViewerOpen && (
+                <DocumentViewer file={documentFile} onClose={handleCloseViewer} />
+            )}
+        </div>
+    );
+};
 
 export default App;
