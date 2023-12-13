@@ -4,6 +4,13 @@ Simple React app to view pdfs using react-pdf, handles password protected files 
 
 See `Requirements.md` for the original requirements.
 
+## Notes
+This project uses a `customOnPassword` handler which overrides the default password prompt. The default password prompt has issues where the dialog does not close onclick for a cancel button
+
+### References
+- https://stackoverflow.com/questions/77170355/how-to-render-password-protected-pdf-file-in-react-pdf
+- https://github.com/wojtekmaj/react-pdf/issues/581
+
 ## Project Structure
 
 - `App.js`: This is the main component of the application. It manages the state of the document viewer and renders a button to open the viewer and the `DocumentViewer` component itself.
