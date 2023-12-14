@@ -14,8 +14,12 @@ const App = () => {
                 PDF Viewer React App
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-                Simple App to view PDFs using react-pdf, handles password protected files and multi-page PDFs with navigation features and good UX.
+                Simple App to view pdfs using react-pdf
             </Typography>
+            <Typography variant="subtitle2" gutterBottom>
+            Handles password protected files and multi-page pdfs with navigation, zoom & orientation controls.
+            </Typography>
+            <br />
             <Button variant="contained" color="primary" onClick={handleOpenViewer}>
                 View Document
             </Button>
