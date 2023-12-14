@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
-import { pdfjs, Document, Page, PasswordResponses } from 'react-pdf';
-import { Modal, Button, IconButton, Typography, Box } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import RotateRightIcon from '@material-ui/icons/RotateRight'; // for landscape mode icon
-import ZoomInIcon from '@material-ui/icons/ZoomIn';
-import ZoomOutIcon from '@material-ui/icons/ZoomOut';
+import React, { useState } from "react";
+import { pdfjs, Document, Page, PasswordResponses } from "react-pdf";
+import {
+  Modal,
+  Button,
+  IconButton,
+  Typography,
+  Box,
+  Grid,
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import RotateRightIcon from "@material-ui/icons/RotateRight"; // for landscape mode icon
+import ZoomInIcon from "@material-ui/icons/ZoomIn";
+import ZoomOutIcon from "@material-ui/icons/ZoomOut";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 'auto', // changed from '80vw' to 'auto'
-    maxWidth: '100vw', // ensure the modal doesn't exceed the width of the viewport
-    height: '80vh',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    outline: 'none',
-    overflow: 'scroll',
-  };
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "auto", // changed from '80vw' to 'auto'
+  maxWidth: "100vw", // ensure the modal doesn't exceed the width of the viewport
+  height: "80vh",
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  outline: "none",
+  overflow: "scroll",
+};
 
 const DocumentViewer = ({ file, onClose }) => {
   const [numPages, setNumPages] = useState(null);
@@ -56,16 +63,16 @@ const DocumentViewer = ({ file, onClose }) => {
 
   // Custom function for onPassword callback
   const customOnPassword = (callback, reason) => {
-    let passwordPrompt = 'Enter the password to open this PDF file.';
+    let passwordPrompt = "Enter the password to open this PDF file.";
     if (reason === PasswordResponses.INCORRECT_PASSWORD) {
-      passwordPrompt = 'Invalid password. Please try again.';
+      passwordPrompt = "Invalid password. Please try again.";
     }
 
     // Prompt user for password
     const password = prompt(passwordPrompt);
     if (password) {
       // If a password is provided, pass it to the callback
-      console.log('Password provided is correct.');
+      console.log("Password provided is correct.");
       callback(password);
     } else {
       // Handle the case where the user cancels the password prompt
@@ -83,52 +90,93 @@ const DocumentViewer = ({ file, onClose }) => {
       <Box sx={modalStyle}>
         <IconButton
           onClick={onClose}
-          style={{ position: 'absolute', right: '10px', top: '10px' }}
+          style={{ position: "absolute", right: "10px", top: "10px" }}
         >
           <CloseIcon />
         </IconButton>
-        <Typography id="document-viewer-modal-title" variant="h6" component="h2">
+        <Typography
+          id="document-viewer-modal-title"
+          variant="h6"
+          component="h2"
+        >
           Document Viewer
         </Typography>
-        <Box sx={{ overflow: 'auto', maxHeight: '70vh' }}>
+        <Box sx={{ overflow: "auto", maxHeight: "70vh" }}>
           <Document
             file={file}
             onLoadSuccess={onDocumentLoadSuccess}
             onPassword={customOnPassword}
           >
-            <Page renderTextLayer={false} renderAnnotationLayer={false} pageNumber={pageNumber} 
-            width={document.body.clientWidth * 0.8}
-            rotate={rotation}
-            scale={scale}/>
+            <Page
+              renderTextLayer={false}
+              renderAnnotationLayer={false}
+              pageNumber={pageNumber}
+              width={document.body.clientWidth * 0.8}
+              rotate={rotation}
+              scale={scale}
+            />
           </Document>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button onClick={zoomOut} startIcon={<ZoomOutIcon />} variant="outlined">
-            Zoom Out
-          </Button>
-          <Button onClick={zoomIn} startIcon={<ZoomInIcon />} variant="outlined">
-            Zoom In
-          </Button>
-        <Button onClick={toggleOrientation} startIcon={<RotateRightIcon />} variant="outlined">
-            {rotation === 0 ? 'Landscape' : 'Portrait'}
-          </Button>
-          <Button
-            onClick={goToPrevPage}
-            disabled={pageNumber <= 1}
-            variant="outlined"
+        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+          {/* Grid container for controls */}
+          <Grid
+            container
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+            style={{ position: "absolute", bottom: 10, left: 0, right: 0 }}
           >
-            Previous
-          </Button>
-          <Typography>
-            Page {pageNumber} of {numPages}
-          </Typography>
-          <Button
-            onClick={goToNextPage}
-            disabled={pageNumber >= numPages}
-            variant="outlined"
-          >
-            Next
-          </Button>
+            <Grid item>
+              <Button
+                onClick={zoomOut}
+                startIcon={<ZoomOutIcon />}
+                variant="contained"
+              >
+                Zoom Out
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={zoomIn}
+                startIcon={<ZoomInIcon />}
+                variant="contained"
+              >
+                Zoom In
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={toggleOrientation}
+                startIcon={<RotateRightIcon />}
+                variant="contained"
+              >
+                {rotation === 0 ? "Landscape" : "Portrait"}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={goToPrevPage}
+                disabled={pageNumber <= 1}
+                variant="contained"
+              >
+                Previous
+              </Button>
+            </Grid>
+            <Grid item>
+              <Typography variant="body1">
+                Page {pageNumber} of {numPages}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={goToNextPage}
+                disabled={pageNumber >= numPages}
+                variant="contained"
+              >
+                Next
+              </Button>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Modal>
