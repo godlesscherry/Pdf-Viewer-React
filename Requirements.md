@@ -16,7 +16,7 @@
 
 - Implement navigation controls (previous and next buttons) to browse through the document pages. Multiple page documents must be rendered with page numbers, with ability to navigate to the next and previous pages.
 - Display the current page number and the total number of pages to the user.
-- Optionally, you could add a page selector input for quick navigation to a specific page.
+- Add a page selector input, such as GoTo field for quick navigation to a specific page.
 - Ensure that this container is responsive and provides a good reading experience on various screen sizes.
 - The document viewer must be scrollable if the document is longer than the viewport.
 
@@ -25,10 +25,12 @@
 - To create a clear separation between the viewer and the rest of the application, consider implementing the viewer as a modal. This typically involves:
 - A slightly opaque or blurred background to focus attention on the document.
 - A distinct close button, possibly in the top-right corner of the modal.
-- Animations for opening and closing the modal can also enhance UX.
+- The document title should be displayed in the modal header.
 
 ### Zoom Controls:
 - Implement zoom controls to zoom in and out of the document. The zoom controls should be accessible from the document viewer.
+- Zooming in and out of the document should be smooth and not cause any jarring effects.
+- Place all pdf controls in a grid so that the buttons stay fixed in place when the user zooms in and out of the document.
 
 ### Potrait and Landscape Mode:
 - The document viewer should be able to display documents in both portrait and landscape mode.
