@@ -7,9 +7,11 @@ import {
   Typography,
   Box,
   Grid,
+  TextField
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import RotateRightIcon from "@material-ui/icons/RotateRight"; // for landscape mode icon
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'; // for GoToPage icon
 import ZoomInIcon from "@material-ui/icons/ZoomIn";
 import ZoomOutIcon from "@material-ui/icons/ZoomOut";
 
@@ -35,28 +37,51 @@ const DocumentViewer = ({ file, onClose }) => {
   const [pageNumber, setPageNumber] = useState(1); // Track the current page number
   const [rotation, setRotation] = useState(0); // Rotation state: 0 for portrait, 90 for landscape
   const [scale, setScale] = useState(1.0); // Scale state for zoom level
+  const [inputPageNumber, setInputPageNumber] = useState(''); // Track the input page number for GoToPage feature
 
+  // Function to extract the filename from a path or URL
+  const getFileName = (filePath) => {
+    return filePath.split('/').pop().split('#')[0].split('?')[0];
+  };
+
+  const fileName = getFileName(file);
+
+  // Handle input page number change
+  const handleInputPageNumberChange = (event) => {
+    setInputPageNumber(event.target.value);
+  };
+  // Handle GoToPage button click
+  const handleGoToPage = () => {
+    const pageNumber = parseInt(inputPageNumber, 10);
+    if (pageNumber >= 1 && pageNumber <= numPages) {
+      setPageNumber(pageNumber);
+    } else {
+      alert('Please enter a valid page number.');
+    }
+  };
+  // Handle zoom in button click
   const zoomIn = () => {
     setScale((prevScale) => prevScale + 0.1);
   };
-
+  // Handle zoom out button click
   const zoomOut = () => {
     setScale((prevScale) => Math.max(prevScale - 0.1, 0.5)); // Prevent scaling too small
   };
 
+  // Handle orientation toggle button click
   const toggleOrientation = () => {
     // Toggle between 0 (portrait) and 90 (landscape) degrees
     setRotation((prevRotation) => (prevRotation === 0 ? 90 : 0));
   };
-
+  // Handle document load success
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
-
+  // Handle previous page click
   const goToPrevPage = () => {
     setPageNumber((prevPage) => Math.max(prevPage - 1, 1));
   };
-
+  // Handle next page click
   const goToNextPage = () => {
     setPageNumber((prevPage) => Math.min(prevPage + 1, numPages));
   };
@@ -99,7 +124,7 @@ const DocumentViewer = ({ file, onClose }) => {
           variant="h6"
           component="h2"
         >
-          Document Viewer
+          {fileName}
         </Typography>
         <Box sx={{ overflow: "auto", maxHeight: "70vh" }}>
           <Document
@@ -126,6 +151,7 @@ const DocumentViewer = ({ file, onClose }) => {
             justifyContent="center"
             style={{ position: "absolute", bottom: 10, left: 0, right: 0 }}
           >
+          
             <Grid item>
               <Button
                 onClick={zoomOut}
@@ -153,6 +179,7 @@ const DocumentViewer = ({ file, onClose }) => {
                 {rotation === 0 ? "Landscape" : "Portrait"}
               </Button>
             </Grid>
+            
             <Grid item>
               <Button
                 onClick={goToPrevPage}
@@ -176,6 +203,26 @@ const DocumentViewer = ({ file, onClose }) => {
                 Next
               </Button>
             </Grid>
+            <Grid item>
+            <TextField
+              size="small"
+              variant="outlined"
+              type="number"
+              inputProps={{ min: 1, max: numPages }}
+              value={inputPageNumber}
+              onChange={handleInputPageNumberChange}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter') {
+                  handleGoToPage();
+                }
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <Button onClick={handleGoToPage} startIcon={<ArrowRightAltIcon />} variant="contained">
+              Go To Page
+            </Button>
+          </Grid>
           </Grid>
         </Box>
       </Box>
