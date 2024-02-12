@@ -4,7 +4,7 @@ import { Button, Typography, Container } from '@material-ui/core';
 
 const App = () => {
     const [isViewerOpen, setIsViewerOpen] = useState(false);
-    const documentFile = process.env.PUBLIC_URL + '/large-multi-page.pdf';
+    const documentFile = process.env.PUBLIC_URL + '/sample-protected.pdf';
     const handleOpenViewer = () => setIsViewerOpen(true);
     const handleCloseViewer = () => setIsViewerOpen(false);
 
